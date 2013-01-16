@@ -23,6 +23,11 @@
 #ifndef MAPNIK_JSON_GEOMETRY_GENERATOR_GRAMMAR_HPP
 #define MAPNIK_JSON_GEOMETRY_GENERATOR_GRAMMAR_HPP
 
+// TODO https://github.com/mapnik/mapnik/issues/1658
+#ifdef BOOST_SPIRIT_USE_PHOENIX_V3
+#undef BOOST_SPIRIT_USE_PHOENIX_V3
+#endif
+
 // mapnik
 #include <mapnik/global.hpp>
 #include <mapnik/geometry.hpp>
@@ -42,7 +47,6 @@
 #include <boost/math/special_functions/trunc.hpp> // trunc to avoid needing C++11
 
 
-//#define BOOST_SPIRIT_USE_PHOENIX_V3 1
 
 namespace boost { namespace spirit { namespace traits {
 
@@ -186,7 +190,7 @@ struct geometry_generator_grammar :
             ;
 
         polygon_coord %= ( &uint_(mapnik::SEG_MOVETO) << eps[_r1 += 1]
-                           << karma::string[ if_ (_r1 > 1) [_1 = "],["]
+                           << karma::string[ phoenix::if_ (_r1 > 1) [_1 = "],["]
                                       .else_[_1 = '[' ]] | &uint_ << lit(','))
             << lit('[') << coord_type
             << lit(',')
@@ -258,9 +262,9 @@ struct multi_geometry_generator_grammar :
         geometry = (lit("{\"type\":")
                     << geometry_types[_1 = phoenix::at_c<0>(_a)][_a = _multi_type(_val)]
                     << lit(",\"coordinates\":")
-                    << karma::string[ if_ (phoenix::at_c<0>(_a) > 3) [_1 = '[']]
+                    << karma::string[ phoenix::if_ (phoenix::at_c<0>(_a) > 3) [_1 = '[']]
                     << coordinates
-                    << karma::string[ if_ (phoenix::at_c<0>(_a) > 3) [_1 = ']']]
+                    << karma::string[ phoenix::if_ (phoenix::at_c<0>(_a) > 3) [_1 = ']']]
                     << lit('}')) | lit("null")
             ;
 

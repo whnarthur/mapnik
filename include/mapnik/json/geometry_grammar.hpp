@@ -35,13 +35,16 @@ namespace mapnik { namespace json {
 
 namespace qi = boost::spirit::qi;
 namespace phoenix = boost::phoenix;
-namespace fusion = boost::fusion;
 namespace standard_wide =  boost::spirit::standard_wide;
 using standard_wide::space_type;
 
 struct push_vertex
 {
+#ifdef BOOST_SPIRIT_USE_PHOENIX_V3
+    template <typename T0>
+#else
     template <typename T0,typename T1, typename T2, typename T3>
+#endif
     struct result
     {
         typedef void type;

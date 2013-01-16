@@ -64,7 +64,11 @@ struct unicode_impl
 
 struct regex_match_impl
 {
+#ifdef BOOST_SPIRIT_USE_PHOENIX_V3
+    template <typename T>
+#else
     template <typename T0, typename T1>
+#endif
     struct result
     {
         typedef expr_node type;
@@ -81,7 +85,12 @@ struct regex_match_impl
 
 struct regex_replace_impl
 {
+
+#ifdef BOOST_SPIRIT_USE_PHOENIX_V3
+    template <typename T>
+#else
     template <typename T0, typename T1, typename T2>
+#endif
     struct result
     {
         typedef expr_node type;

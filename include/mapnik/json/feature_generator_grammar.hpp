@@ -23,6 +23,11 @@
 #ifndef MAPNIK_JSON_FEATURE_GENERATOR_GRAMMAR_HPP
 #define MAPNIK_JSON_FEATURE_GENERATOR_GRAMMAR_HPP
 
+// TODO https://github.com/mapnik/mapnik/issues/1658
+#ifdef BOOST_SPIRIT_USE_PHOENIX_V3
+#undef BOOST_SPIRIT_USE_PHOENIX_V3
+#endif
+
 // mapnik
 #include <mapnik/global.hpp>
 #include <mapnik/value.hpp>
@@ -37,6 +42,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_fusion.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
+#include <boost/spirit/include/phoenix_statement.hpp>
 #include <boost/fusion/include/boost_tuple.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/cons.hpp>
